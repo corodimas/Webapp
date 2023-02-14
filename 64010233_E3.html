@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div id="maincontainer"></div>
+        <script>
+            var worker = new Worker("worker.js");
+            //Header Section
+            var heading = document.createElement("h1");
+            heading.textContent ="Exercise 04: JavaScript&DOM "
+            document.body.appendChild(heading);
+
+
+            //Button Section
+            var time_button = document.createElement("button");
+            time_button.textContent = "Click me to display Date and Time";
+            document.body.appendChild(time_button);
+            
+            var ghost= document.createElement("h4")
+            ghost.textContent = "_";
+            ghost.style.color = "white";
+            ghost.style.position = "fixed";
+            ghost.style.right = "0";
+            ghost.style.bottom = "0";
+            document.body.appendChild(ghost);
+
+            
+            var isFixed = false;
+            var colors = ["red", "orange", "yellow", "green", "blue", "purple","lightblue"];
+            var textcolors =  ["AliceBlue", "AntiqueWhite", "Azure", "Aquamarine", "BlanchedAlmond", "Chocolate","DarkGoldenRod"];
+            var i =0;
+
+            time_button.addEventListener("click", function() {
+                if (isFixed) 
+                {
+                    worker.postMessage("stop");
+                    time_button.style.position = "relative";
+                    ghost.style.position = "fixed";
+                    isFixed = false;
+                } else 
+                {
+                    worker.postMessage("start");
+                    time_button.textContent = Date().toString();
+                    time_button.style.backgroundColor = colors[i];
+                    time_button.style.color = textcolors[i];
+                    time_button.style.border ="2px solid black"
+                    time_button.style.position = "fixed";
+                    time_button.style.top = "0";
+                    time_button.style.right = "0";
+                    ghost.style.position = "";
+                    isFixed = true;
+                }
+            });
+
+            worker.onmessage = function(event) {
+            if (isFixed) {
+                time_button.textContent = event.data;
+                if (i<6){
+                    i= i+1;
+                    time_button.style.backgroundColor = colors[i];
+                    time_button.style.color = textcolors[i];
+                    
+                }
+                else{
+                    i = 0;
+                    time_button.style.backgroundColor = colors[i];
+                    time_button.style.color = textcolors[i];
+                }
+            }
+            };
+
+            
+
+
+
+            //personalInfo Section
+            var pinfoText = document.createElement("h3");;
+            pinfoText.textContent = "";
+            var pinfoTextreal = document.createElement("span");
+            pinfoTextreal.textContent = "Personal Info"
+            pinfoTextreal.style.textDecoration = "underline";
+            pinfoTextreal.style.color = "rgb(240,188,232)";
+
+            pinfoTextreal.onmouseover = function() {
+                pinfoTextreal.style.backgroundColor = "Yellow";
+                pinfoTextreal.style.cursor = "pointer";
+                }
+            pinfoTextreal.onmouseout = function() {
+                pinfoTextreal.style.backgroundColor = "";
+                }
+
+            var hidul = document.createElement('ul');
+                var hidli1 = document.createElement('li');
+                var hidli2 = document.createElement('li');
+                var hidli3 = document.createElement('li');
+            hidli1.innerText = 'Natdani poonpon ID: 64010233';
+            hidli2.innerText = 'Subject: Web Application Development';
+            hidli3.innerText = 'Semester: 2';
+            hidul.appendChild(hidli1);
+            hidul.appendChild(hidli2);
+            hidul.appendChild(hidli3);
+
+            hidul.style.display="none"; 
+            pinfoTextreal.addEventListener("click",function(){
+                if(hidul.style.display == "none"){
+                    hidul.style.display = "block";
+                }
+                else{
+                    hidul.style.display ="none";
+                }
+            });
+            document.body.appendChild(pinfoText);
+            document.body.appendChild(pinfoTextreal);
+            document.body.appendChild(hidul);
+
+
+            //Snapshot Section
+            var snapshotHeader = document.createElement("h1");
+            snapshotHeader.textContent="Snapshots";
+            snapshotHeader.style.position ="relative"
+            document.body.appendChild(snapshotHeader);
+
+
+
+
+
+            //Image Section
+            var ul = document.createElement('ul');
+            var li1 = document.createElement('li');
+            var li2 = document.createElement('li');
+            var li3 = document.createElement('li');
+            var li4 = document.createElement('li');
+            li1.innerText = 'Fireworks';
+            li2.innerText = 'Crest';
+            li3.innerText = 'Action';
+            li4.innerText = 'Baffolo';
+            
+            ul.style.color="blue"
+            li1.addEventListener('click', function () {
+                while (imageContainer.firstChild) {
+                  imageContainer.removeChild(imageContainer.firstChild);
+                }
+                imageElement = document.createElement('img');
+                imageElement.src ='https://ichef.bbci.co.uk/images/ic/1920x1080/p05lqc4f.jpg';
+                imageElement.style.width = '500px';
+                imageContainer.appendChild(imageElement);
+              });
+        
+            li2.addEventListener('click', function () {
+                while (imageContainer.firstChild) {
+                  imageContainer.removeChild(imageContainer.firstChild);
+                }
+                imageElement = document.createElement('img');
+                imageElement.src ='https://static.vecteezy.com/system/resources/previews/006/552/826/original/premium-quality-product-100-percen-original-logo-template-illustration-free-vector.jpg';
+                imageElement.style.width = '500px';
+                imageContainer.appendChild(imageElement);
+              });
+
+            li3.addEventListener('click', function () {
+                while (imageContainer.firstChild) {
+                  imageContainer.removeChild(imageContainer.firstChild);
+                }
+                imageElement = document.createElement('img');
+                imageElement.src ='https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Mookie_Betts_hitting_the_ball_%2836478781664%29.jpg/640px-Mookie_Betts_hitting_the_ball_%2836478781664%29.jpg';
+                imageElement.style.width = '500px';
+                imageContainer.appendChild(imageElement);
+              });
+
+            li4.addEventListener('click', function () {
+                while (imageContainer.firstChild) {
+                  imageContainer.removeChild(imageContainer.firstChild);
+                }
+                imageElement = document.createElement('img');
+                imageElement.src ='https://i.natgeofe.com/n/de7be89d-3715-4e89-b83b-ab697ef781b8/thumbnail-cape-buffalo-nationalgeographic_1976203.jpg';
+                imageElement.style.width = '500px';
+                imageContainer.appendChild(imageElement);
+              });
+            ul.appendChild(li1);
+            ul.appendChild(li2);
+            ul.appendChild(li3);
+            ul.appendChild(li4);
+
+            document.body.appendChild(ul);
+
+
+            const imageContainer = document.createElement('div');
+            imageContainer.style.display = 'flex';
+            imageContainer.style.flexWrap = 'wrap';
+            
+            const defaultImage = document.createElement('img');
+            defaultImage.src = 'https://i.ibb.co/JpMqYmB/download.jpg';
+            defaultImage.style.width = '500px';
+
+
+            imageContainer.appendChild(defaultImage);
+            document.body.appendChild(imageContainer);
+
+        </script>
+    </body>
+</html>
